@@ -4,19 +4,20 @@ import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SantaClaus {
-    private boolean kidsStillBelieveInSanta = true;
-    private int year = 2006;
+    private volatile boolean kidsStillBelieveInSanta = true;
+    private final Semaphore disbelief = new Semaphore(0);
     private final static int END_OF_FAITH = 2012;
+    private AtomicInteger year = new AtomicInteger(2006);
     private static Random generator = new Random();
 
-    final Semaphore queueElves;
-    final CyclicBarrier threeElves;
-    final CyclicBarrier elvesLeaveOffice;
-    final CyclicBarrier allReindeers;
-    final Semaphore santa;
-    final Semaphore finished;
+    private final Semaphore queueElves;
+    private final CyclicBarrier threeElves;
+    private final CyclicBarrier elvesLeaveOffice;
+    private final CyclicBarrier allReindeers;
+    private final Semaphore santa;
 
     class Reindeer implements Runnable {
         int id;
@@ -35,11 +36,10 @@ public class SantaClaus {
                     if (waitIndex == 0) {
                         santa.acquire();
                         System.out.println("Delivery for Christmas " + year);
-                        year++;
-                        if (year == END_OF_FAITH)
+                        if (year.incrementAndGet() == END_OF_FAITH)
                         {
                             kidsStillBelieveInSanta = false;
-                            finished.release();
+                            disbelief.release();
                         }
                         santa.release();
                     }
@@ -104,7 +104,6 @@ public class SantaClaus {
     }
 
     public SantaClaus() {
-        finished = new Semaphore(0);
         santa = new Semaphore(1);
         queueElves = new Semaphore(3, true);    // use a fair semaphore
         threeElves = new CyclicBarrier(3,
@@ -125,9 +124,9 @@ public class SantaClaus {
         while (iter.hasNext())
             iter.next().start();
 
-        // wait until !kidsStillBelieveInSanta
         try {
-            finished.acquire();
+            // wait until !kidsStillBelieveInSanta
+            disbelief.acquire();
             System.out.println("Faith has vanished from the world");
             iter = threads.iterator();
             while (iter.hasNext())
