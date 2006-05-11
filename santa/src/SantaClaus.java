@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -7,17 +6,26 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SantaClaus {
+    // helper variables for program termination and output
     private volatile boolean kidsStillBelieveInSanta = true;
     private final Semaphore disbelief = new Semaphore(0);
     private final static int END_OF_FAITH = 2012;
     private AtomicInteger year = new AtomicInteger(2006);
     private static Random generator = new Random();
 
+    // problem dimensions
+    private final static int NUMBER_OF_REINDEER = 9;
+    private final static int NUMBER_OF_ELVES = 10;
+    private final static int ELVES_NEEDED_TO_WAKE_SANTA = 3;
+
+    // synchronisation variables
     private final Semaphore queueElves;
     private final CyclicBarrier threeElves;
-    private final CyclicBarrier elvesLeaveOffice;
+    private final CyclicBarrier elvesAreInspired;
     private final CyclicBarrier allReindeers;
-    private final Semaphore santa;
+    private final Semaphore santasAttention;
+    private final static int LAST_REINDEER = 0;    // compares to CyclicBarrier.await()
+    private final static int THIRD_ELF = 0;        // compares to CyclicBarrier.await()
 
     class Reindeer implements Runnable {
         int id;
@@ -31,17 +39,17 @@ public class SantaClaus {
                     Thread.sleep(900 + generator.nextInt(200));
 
                     // only all reindeers together can wake Santa
-                    int waitIndex = allReindeers.await();
-                    // the last reindeer to pass the barrier acts for all
-                    if (waitIndex == 0) {
-                        santa.acquire();
-                        System.out.println("Delivery for Christmas " + year);
+                    int reindeer = allReindeers.await();
+                    // the last reindeer to return to North Pole must get Santa
+                    if (reindeer == LAST_REINDEER) {
+                        santasAttention.acquire();
+                        System.out.println("=== Delivery for Christmas " + year + " ===");
                         if (year.incrementAndGet() == END_OF_FAITH)
                         {
                             kidsStillBelieveInSanta = false;
                             disbelief.release();
                         }
-                        santa.release();
+                        santasAttention.release();
                     }
                 } catch (InterruptedException e) {
                     // thread interrupted for program cleanup
@@ -65,25 +73,28 @@ public class SantaClaus {
                 while (kidsStillBelieveInSanta) {
                     // no more than three elves fit into Santa's office
                     queueElves.acquire();
-                    System.out.println("Knocking : Elf " + id);
+                    System.out.println("Elf " + id + " ran out of ideas");
 
                     // wait until three elves have a problem
-                    int waitIndex = threeElves.await();
+                    int elf = threeElves.await();
 
                     // the third elf acts for all three
-                    if (waitIndex == 0)
-                        santa.acquire();
+                    if (elf == THIRD_ELF)
+                        santasAttention.acquire();
 
-                    // wait until all elves have understood Santas solutions
+                    // wait until all elves have new ideas
                     Thread.sleep(generator.nextInt(500));
-                    System.out.println("Toy R&D : Elf " + id);
-                    elvesLeaveOffice.await();
+                    System.out.println("Elf " + id + " got inspiration");
+                    elvesAreInspired.await();
 
-                    if (waitIndex == 0)
-                        santa.release();
+                    if (elf == THIRD_ELF)
+                        santasAttention.release();
+
+                    // other elves that ran out of ideas in the meantime
+                    // may now gather and wake santa again
                     queueElves.release();
 
-                    // manufacture toys until a problem emerges
+                    // manufacture toys until the inspiration is used up
                     Thread.sleep(generator.nextInt(2000));
                 }
             } catch (InterruptedException e) {
@@ -104,45 +115,40 @@ public class SantaClaus {
     }
 
     public SantaClaus() {
-        santa = new Semaphore(1);
-        queueElves = new Semaphore(3, true);    // use a fair semaphore
-        threeElves = new CyclicBarrier(3,
-                new BarrierMessage("--- Three elves are knocking ---"));
-        elvesLeaveOffice = new CyclicBarrier(3,
-                new BarrierMessage("---- Elvish problems solved ----"));
-        allReindeers = new CyclicBarrier(9, new Runnable() {
+        santasAttention = new Semaphore(1);
+        queueElves = new Semaphore(ELVES_NEEDED_TO_WAKE_SANTA, true);    // use a fair semaphore
+        threeElves = new CyclicBarrier(ELVES_NEEDED_TO_WAKE_SANTA,
+                new BarrierMessage("--- " + ELVES_NEEDED_TO_WAKE_SANTA + " elves are knocking ---"));
+        elvesAreInspired = new CyclicBarrier(ELVES_NEEDED_TO_WAKE_SANTA,
+                new BarrierMessage("--- Elves return to work ---"));
+        allReindeers = new CyclicBarrier(NUMBER_OF_REINDEER, new Runnable() {
             public void run() {
                 System.out.println("=== Reindeer reunion for Christmas " + year +" ===");
             }});
 
         ArrayList<Thread> threads = new ArrayList<Thread>();
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < NUMBER_OF_ELVES; ++i)
             threads.add(new Thread(new Elf(i)));
-        for (int i = 0; i < 9; ++i)
+        for (int i = 0; i < NUMBER_OF_REINDEER; ++i)
             threads.add(new Thread(new Reindeer(i)));
-        Iterator<Thread> iter = threads.iterator();
-        while (iter.hasNext())
-            iter.next().start();
+        System.out.println("Once upon in the year " + year + " :");
+        for (Thread t : threads)
+            t.start();
 
         try {
             // wait until !kidsStillBelieveInSanta
             disbelief.acquire();
             System.out.println("Faith has vanished from the world");
-            iter = threads.iterator();
-            while (iter.hasNext())
-                iter.next().interrupt();
-            iter = threads.iterator();
-            while (iter.hasNext())
-                iter.next().join();
+            for (Thread t : threads)
+                t.interrupt();
+            for (Thread t : threads)
+                t.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println("The End of Santa Claus");
     }
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         new SantaClaus();
     }
