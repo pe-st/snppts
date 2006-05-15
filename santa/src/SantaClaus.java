@@ -1,9 +1,15 @@
+/* Solving the Santa Claus Problem (John Trono, 1994) with Java J2SE 5.0
+ *
+ * (c) 2006 Peter Steiner <peter.steiner@schlau.ch> http://pesche.schlau.ch
+ */
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
+import static java.lang.System.out;
 
 public class SantaClaus {
     // helper variables for program termination and output
@@ -43,7 +49,7 @@ public class SantaClaus {
                     // the last reindeer to return to North Pole must get Santa
                     if (reindeer == LAST_REINDEER) {
                         santasAttention.acquire();
-                        System.out.println("=== Delivery for Christmas " + year + " ===");
+                        out.println("=== Delivery for Christmas " + year + " ===");
                         if (year.incrementAndGet() == END_OF_FAITH)
                         {
                             kidsStillBelieveInSanta = false;
@@ -57,7 +63,7 @@ public class SantaClaus {
                     // another thread in the barrier was interrupted
                 }
             }
-            System.out.println("Reindeer " + id + " retires");
+            out.println("Reindeer " + id + " retires");
         }
     }
 
@@ -73,7 +79,7 @@ public class SantaClaus {
                 while (kidsStillBelieveInSanta) {
                     // no more than three elves fit into Santa's office
                     queueElves.acquire();
-                    System.out.println("Elf " + id + " ran out of ideas");
+                    out.println("Elf " + id + " ran out of ideas");
 
                     // wait until three elves have a problem
                     int elf = threeElves.await();
@@ -84,7 +90,7 @@ public class SantaClaus {
 
                     // wait until all elves have new ideas
                     Thread.sleep(generator.nextInt(500));
-                    System.out.println("Elf " + id + " got inspiration");
+                    out.println("Elf " + id + " got inspiration");
                     elvesAreInspired.await();
 
                     if (elf == THIRD_ELF)
@@ -102,7 +108,7 @@ public class SantaClaus {
             } catch (BrokenBarrierException e) {
                 // another thread in the barrier was interrupted
             }
-            System.out.println("Elf " + id + " retires");
+            out.println("Elf " + id + " retires");
         }
     }
 
@@ -110,7 +116,7 @@ public class SantaClaus {
         String msg;
         BarrierMessage(String msg) { this.msg = msg; }
         public void run() {
-            System.out.println(msg);
+            out.println(msg);
         }
     }
 
@@ -123,7 +129,7 @@ public class SantaClaus {
                 new BarrierMessage("--- Elves return to work ---"));
         allReindeers = new CyclicBarrier(NUMBER_OF_REINDEER, new Runnable() {
             public void run() {
-                System.out.println("=== Reindeer reunion for Christmas " + year +" ===");
+                out.println("=== Reindeer reunion for Christmas " + year +" ===");
             }});
 
         ArrayList<Thread> threads = new ArrayList<Thread>();
@@ -131,14 +137,14 @@ public class SantaClaus {
             threads.add(new Thread(new Elf(i)));
         for (int i = 0; i < NUMBER_OF_REINDEER; ++i)
             threads.add(new Thread(new Reindeer(i)));
-        System.out.println("Once upon in the year " + year + " :");
+        out.println("Once upon in the year " + year + " :");
         for (Thread t : threads)
             t.start();
 
         try {
             // wait until !kidsStillBelieveInSanta
             disbelief.acquire();
-            System.out.println("Faith has vanished from the world");
+            out.println("Faith has vanished from the world");
             for (Thread t : threads)
                 t.interrupt();
             for (Thread t : threads)
@@ -146,7 +152,7 @@ public class SantaClaus {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        System.out.println("The End of Santa Claus");
+        out.println("The End of Santa Claus");
     }
 
     public static void main(String[] args) {
