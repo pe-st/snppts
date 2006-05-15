@@ -121,7 +121,10 @@ public class SantaClaus {
     }
 
     public SantaClaus() {
-        santasAttention = new Semaphore(1);
+        // use a fair semaphore for Santa to prevent that a second group
+        // of elves might get Santas attention first if the reindeer are
+        // waiting and Santa is consulting with a first group of elves.
+        santasAttention = new Semaphore(1, true);
         queueElves = new Semaphore(ELVES_NEEDED_TO_WAKE_SANTA, true);    // use a fair semaphore
         threeElves = new CyclicBarrier(ELVES_NEEDED_TO_WAKE_SANTA,
                 new BarrierMessage("--- " + ELVES_NEEDED_TO_WAKE_SANTA + " elves are knocking ---"));
