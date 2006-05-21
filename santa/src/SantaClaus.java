@@ -29,6 +29,7 @@ public class SantaClaus {
     private final CyclicBarrier threeElves;
     private final CyclicBarrier elvesAreInspired;
     private final CyclicBarrier allReindeers;
+    private final CyclicBarrier sleigh;
     private final Semaphore santasAttention;
     private final static int LAST_REINDEER = 0;    // compares to CyclicBarrier.await()
     private final static int THIRD_ELF = 0;        // compares to CyclicBarrier.await()
@@ -46,7 +47,7 @@ public class SantaClaus {
 
                     // only all reindeers together can wake Santa
                     int reindeer = allReindeers.await();
-                    // the last reindeer to return to North Pole must get Santa
+                    // the last reindeer to return to North Pole must wake Santa
                     if (reindeer == LAST_REINDEER) {
                         santasAttention.acquire();
                         out.println("=== Delivery for Christmas " + year + " ===");
@@ -55,7 +56,18 @@ public class SantaClaus {
                             kidsStillBelieveInSanta = false;
                             disbelief.release();
                         }
+                    }
+
+                    // to deliver toys, the reindeer must be harnessed to the sleigh
+                    sleigh.await();
+                    Thread.sleep(generator.nextInt(20));   // delivering is almost immediate
+
+                    // unharnessing can use the same barrier as harnessing,
+                    // because the barrier is cyclic
+                    reindeer = sleigh.await();
+                    if (reindeer == LAST_REINDEER) {
                         santasAttention.release();
+                        out.println("=== Toys are delivered ===");
                     }
                 } catch (InterruptedException e) {
                     // thread interrupted for program cleanup
@@ -120,6 +132,18 @@ public class SantaClaus {
         }
     }
 
+    class Harnessing implements Runnable {
+        boolean isSleighAttached;
+        Harnessing() { isSleighAttached = false; }
+        public void run() {
+            isSleighAttached = !isSleighAttached;
+            if (isSleighAttached)
+                out.println("=== All reindeer harnessed ===");
+            else
+                out.println("=== All reindeer are back in the stable ===");
+        }
+    }
+
     public SantaClaus() {
         // use a fair semaphore for Santa to prevent that a second group
         // of elves might get Santas attention first if the reindeer are
@@ -134,6 +158,7 @@ public class SantaClaus {
             public void run() {
                 out.println("=== Reindeer reunion for Christmas " + year +" ===");
             }});
+        sleigh = new CyclicBarrier(NUMBER_OF_REINDEER, new Harnessing());
 
         ArrayList<Thread> threads = new ArrayList<Thread>();
         for (int i = 0; i < NUMBER_OF_ELVES; ++i)
