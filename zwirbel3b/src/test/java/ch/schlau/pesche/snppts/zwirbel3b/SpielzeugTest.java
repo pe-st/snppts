@@ -9,7 +9,6 @@ public class SpielzeugTest {
     @Test
     public void equals_hashcode_contract() {
         EqualsVerifier.forClass(Spielzeug.class)
-//                .withRedefinedSubclass(Zwirbel.class)
                 .verify();
     }
 }

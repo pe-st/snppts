@@ -11,16 +11,6 @@ public class Spielzeug {
         return spielzeugId;
     }
 
-//    /**
-//     * Don't allow subclasses with added state to be equal;
-//     * see http://www.artima.com/lejava/articles/equality.html for more about canEqual()
-//     * @param other
-//     * @return
-//     */
-//    public boolean canEqual(Object other) {
-//        return other instanceof Spielzeug;
-//    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) {
@@ -31,9 +21,6 @@ public class Spielzeug {
             return false;
 
         Spielzeug that = (Spielzeug) o;
-//        if (!that.canEqual(this)) {
-//            return false;
-//        }
 
         return new org.apache.commons.lang3.builder.EqualsBuilder()
                 .append(spielzeugId, that.spielzeugId)
