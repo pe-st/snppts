@@ -76,9 +76,6 @@
       </list>
     </option>
   </component>
-  <component name="ProjectDictionaryState">
-    <dictionary name="tksnp" />
-  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -152,5 +149,4 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="1" Folder0="$PROJECT_DIR$/../../../fo_java/ao/tools/intellij" Dictionaries="0" />
 </project>
