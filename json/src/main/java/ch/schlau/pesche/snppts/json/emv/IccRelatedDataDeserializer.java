@@ -28,7 +28,7 @@ public class IccRelatedDataDeserializer extends StdDeserializer<IccRelatedData> 
 
         JsonToken t = jp.getCurrentToken();
         if (t != JsonToken.START_OBJECT) {
-            throw ctxt.mappingException(IccRelatedData.class, t);
+            ctxt.handleUnexpectedToken(IccRelatedData.class, jp);
         }
 
         IccRelatedData iccRelatedData = new IccRelatedData();
@@ -44,7 +44,7 @@ public class IccRelatedDataDeserializer extends StdDeserializer<IccRelatedData> 
                     if ("content".equals(key)) {
                         hasContent = true;
                         if (t != JsonToken.START_OBJECT) {
-                            throw ctxt.mappingException(IccRelatedData.class, t);
+                            ctxt.handleUnexpectedToken(IccRelatedData.class, jp);
                         }
                         continue;
                     }
@@ -64,7 +64,7 @@ public class IccRelatedDataDeserializer extends StdDeserializer<IccRelatedData> 
         if (hasContent) {
             t = jp.nextToken();
             if (t != JsonToken.END_OBJECT) {
-                throw ctxt.mappingException(IccRelatedData.class, t);
+                ctxt.handleUnexpectedToken(IccRelatedData.class, jp);
             }
         }
 
