@@ -12,5 +12,12 @@ target/
 hs_err_pid*
 
 # IntelliJ IDEA
-.idea/**/workspace.xml
-.idea/**/tasks.xml
+**/.idea/artifacts/
+**/.idea/dictionaries/
+**/.idea/kotlinc.xml
+**/.idea/libraries/
+**/.idea/sonarlint/issuestore/
+**/.idea/markdown-navigator/
+**/.idea/markdown-navigator.xml
+**/.idea/workspace.xml
+**/.idea/tasks.xml
