@@ -14,10 +14,9 @@ class GarminExportReaderTest {
     void parse_activities() throws IOException {
 
         String csvfile = getClass().getClassLoader().getResource("activities.csv").getFile();
-        List<String[]> activities = GarminExportReader.parse(csvfile);
+        List<Activity> activities = GarminExportReader.parse(csvfile);
 
-        assertThat("First String array contains the column names", activities.get(0)[1], is("Activity Name"));
-        assertThat(activities.get(1)[1], is("Oberwald-Münster (Gommer Höhenweg)"));
+        assertThat(activities.get(0).getName(), is("Oberwald-Münster (Gommer Höhenweg)"));
     }
 
 }

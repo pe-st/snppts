@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a80a014b-2523-49ab-b784-7751a8b0d146" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../garmin-commons-csv/garmin-commons-csv.iml" afterPath="$PROJECT_DIR$/../garmin-commons-csv/garmin-commons-csv.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../garmin-commons-csv/pom.xml" afterPath="$PROJECT_DIR$/../garmin-commons-csv/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/garmin-opencsv.iml" afterPath="$PROJECT_DIR$/garmin-opencsv.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java" afterPath="$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java" afterPath="$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../json/json.iml" afterPath="$PROJECT_DIR$/../../json/json.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -20,7 +18,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="315">
@@ -30,13 +28,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GarminExportReader.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GarminExportReader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+            <state relative-caret-position="195">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Activity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/Activity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+              <folding>
+                <element signature="e#383#384#0" expanded="true" />
+                <element signature="e#419#420#0" expanded="true" />
+                <element signature="e#447#448#0" expanded="true" />
+                <element signature="e#478#479#0" expanded="true" />
+                <element signature="e#505#506#0" expanded="true" />
+                <element signature="e#545#546#0" expanded="true" />
+                <element signature="e#577#578#0" expanded="true" />
+                <element signature="e#615#616#0" expanded="true" />
+                <element signature="e#649#650#0" expanded="true" />
+                <element signature="e#703#704#0" expanded="true" />
+                <element signature="e#749#750#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,8 +65,8 @@
       <file leaf-file-name="GarminExportReaderTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="13" column="48" lean-forward="false" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
+            <state relative-caret-position="270">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,8 +77,8 @@
       <file leaf-file-name="activities.csv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/resources/activities.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="48" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -69,8 +89,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -88,9 +108,10 @@
         <option value="$PROJECT_DIR$/src/test/resources/activities.csv" />
         <option value="$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/ReadGarminExport.java" />
         <option value="$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9.jar!/com/opencsv/CSVReader.class" />
-        <option value="$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java" />
-        <option value="$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/Activity.java" />
+        <option value="$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java" />
       </list>
     </option>
   </component>
@@ -386,17 +407,11 @@
       <workItem from="1500926316984" duration="1058000" />
       <workItem from="1501607932962" duration="139000" />
       <workItem from="1501778173560" duration="1603000" />
-      <workItem from="1501818342866" duration="1577000" />
+      <workItem from="1501818342866" duration="3426000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="All_in_garmin-opencsv - 2017.08.03 at 18h 48m 44s.xml">
-      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_garmin-opencsv - 2017.08.03 at 18h 49m 59s.xml">
-      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 05h 48m 59s.xml">
       <configuration name="All in garmin-opencsv" configurationId="JUnit" />
     </history-entry>
@@ -406,27 +421,34 @@
     <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 06h 08m 27s.xml">
       <configuration name="All in garmin-opencsv" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GarminExportReaderTest_parse_activities - 2017.06.21 at 19h 08m 46s.xml">
-      <configuration name="GarminExportReaderTest.parse_activities" configurationId="JUnit" />
+    <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 07h 26m 03s.xml">
+      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GarminExportReaderTest_parse_activities - 2017.06.21 at 19h 09m 02s.xml">
-      <configuration name="GarminExportReaderTest.parse_activities" configurationId="JUnit" />
+    <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 07h 26m 22s.xml">
+      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GarminExportReaderTest_parse_activities - 2017.06.21 at 19h 12m 46s.xml">
-      <configuration name="GarminExportReaderTest.parse_activities" configurationId="JUnit" />
+    <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 07h 39m 28s.xml">
+      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GarminExportReaderTest_parse_activities - 2017.06.21 at 19h 14m 03s.xml">
-      <configuration name="GarminExportReaderTest.parse_activities" configurationId="JUnit" />
+    <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 07h 39m 45s.xml">
+      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 07h 40m 26s.xml">
+      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_garmin-opencsv - 2017.08.04 at 07h 41m 09s.xml">
+      <configuration name="All in garmin-opencsv" configurationId="JUnit" />
     </history-entry>
     <history-entry file="GarminExportReaderTest_parse_activities - 2017.06.21 at 19h 16m 34s.xml">
       <configuration name="GarminExportReaderTest.parse_activities" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10367000" />
+    <option name="totallyTimeSpent" value="12216000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -435,7 +457,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2746781" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -443,7 +465,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976826" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39974293" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -466,7 +488,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -696,40 +718,132 @@
     <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9.jar!/com/opencsv/CSVReader.class" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/src.zip!/java/net/URL.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.0.0-M4/junit-platform-commons-1.0.0-M4-sources.jar!/org/junit/platform/commons/util/ReflectionUtils.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/resources/activities.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="14" lean-forward="false" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9-sources.jar!/com/opencsv/CSVReader.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="11" column="14" lean-forward="false" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="13" column="48" lean-forward="false" selection-start-line="13" selection-start-column="48" selection-end-line="13" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="41" lean-forward="false" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/org/omg/CORBA/ACTIVITY_COMPLETED.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="40" column="19" lean-forward="false" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9.jar!/com/opencsv/bean/AbstractCSVToBean.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9.jar!/com/opencsv/bean/CsvToBean.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9.jar!/com/opencsv/bean/CsvToBeanBuilder.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9-sources.jar!/com/opencsv/bean/AbstractCSVToBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9-sources.jar!/com/opencsv/bean/CsvToBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="244" column="0" lean-forward="false" selection-start-line="244" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9.jar!/com/opencsv/bean/MappingUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9-sources.jar!/com/opencsv/bean/MappingUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="104" column="0" lean-forward="false" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/opencsv/opencsv/3.9/opencsv-3.9-sources.jar!/com/opencsv/bean/CsvToBeanBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+          <folding>
+            <element signature="e#383#384#0" expanded="true" />
+            <element signature="e#419#420#0" expanded="true" />
+            <element signature="e#447#448#0" expanded="true" />
+            <element signature="e#478#479#0" expanded="true" />
+            <element signature="e#505#506#0" expanded="true" />
+            <element signature="e#545#546#0" expanded="true" />
+            <element signature="e#577#578#0" expanded="true" />
+            <element signature="e#615#616#0" expanded="true" />
+            <element signature="e#649#650#0" expanded="true" />
+            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#749#750#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/resources/activities.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReaderTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ch/schlau/pesche/snppts/csv/garmin/opencsv/GarminExportReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
