@@ -1,5 +1,6 @@
 package ch.schlau.pesche.snppts.csv.garmin.supercsv;
 
+import java.time.LocalDateTime;
 
 public class Activity {
 
@@ -8,6 +9,8 @@ public class Activity {
     private String name;
 
     private String description;
+
+    private LocalDateTime beginTimestamp;
 
     public String getId() {
         return id;
@@ -31,5 +34,13 @@ public class Activity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getBeginTimestamp() {
+        return beginTimestamp;
+    }
+
+    public void setBeginTimestamp(LocalDateTime beginTimestamp) {
+        this.beginTimestamp = beginTimestamp;
     }
 }
