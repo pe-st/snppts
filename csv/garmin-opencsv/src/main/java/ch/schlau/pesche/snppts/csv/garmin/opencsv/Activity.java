@@ -1,6 +1,11 @@
 package ch.schlau.pesche.snppts.csv.garmin.opencsv;
 
+import java.time.LocalDateTime;
+
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvCustomBindByName;
+
+import ch.schlau.pesche.snppts.csv.garmin.opencsv.converter.LocalDateTimeConverterAlmostRfc1123;
 
 public class Activity {
 
@@ -12,6 +17,9 @@ public class Activity {
 
     @CsvBindByName(column = "Description")
     private String description;
+
+    @CsvCustomBindByName(column = "Begin Timestamp", converter = LocalDateTimeConverterAlmostRfc1123.class)
+    private LocalDateTime beginTimestamp;
 
     public String getId() {
         return id;
@@ -35,5 +43,13 @@ public class Activity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getBeginTimestamp() {
+        return beginTimestamp;
+    }
+
+    public void setBeginTimestamp(LocalDateTime beginTimestamp) {
+        this.beginTimestamp = beginTimestamp;
     }
 }
