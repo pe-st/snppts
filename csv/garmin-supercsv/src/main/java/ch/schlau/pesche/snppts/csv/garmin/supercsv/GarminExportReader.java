@@ -36,7 +36,12 @@ public class GarminExportReader {
             }
 
             return retval;
-
+        } catch (Exception e) {
+            if (reader != null) {
+                System.err.printf("Exception %s in %s, lineNo=%s\n", e.getMessage(),
+                        filename, reader.getLineNumber());
+            }
+            throw e;
         } finally {
             if (reader != null) {
                 reader.close();
