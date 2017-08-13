@@ -2,14 +2,20 @@ package ch.schlau.pesche.snppts.csv.garmin.opencsv;
 
 import java.time.LocalDate;
 
+import com.opencsv.bean.CsvBindByPosition;
+
 public class Fit {
 
+    @CsvBindByPosition(position = 0)
     private LocalDate datum;
 
+    @CsvBindByPosition(position = 1)
     private double km;
 
+    @CsvBindByPosition(position = 2)
     private Integer shoes;
 
+    @CsvBindByPosition(position = 3)
     private Integer elevationGain;
 
     public LocalDate getDatum() {
