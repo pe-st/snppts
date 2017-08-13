@@ -13,6 +13,7 @@ public interface FitMapper {
     FitMapper INSTANCE = Mappers.getMapper(FitMapper.class);
 
     @Mapping(source = "beginTimestamp", target = "datum")
+    @Mapping(source = "distance", target = "km")
     Fit activityToFit(Activity activity);
 
     default LocalDate map(LocalDateTime value) {

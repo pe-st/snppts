@@ -6,11 +6,11 @@ public class Fit {
 
     private LocalDate datum;
 
-    private Double km;
+    private double km;
 
-    private int shoes;
+    private Integer shoes;
 
-    private int delta;
+    private Integer elevationGain;
 
     public LocalDate getDatum() {
         return datum;
@@ -20,27 +20,27 @@ public class Fit {
         this.datum = datum;
     }
 
-    public Double getKm() {
+    public double getKm() {
         return km;
     }
 
-    public void setKm(Double km) {
+    public void setKm(double km) {
         this.km = km;
     }
 
-    public int getShoes() {
+    public Integer getShoes() {
         return shoes;
     }
 
-    public void setShoes(int shoes) {
+    public void setShoes(Integer shoes) {
         this.shoes = shoes;
     }
 
-    public int getDelta() {
-        return delta;
+    public Integer getElevationGain() {
+        return elevationGain;
     }
 
-    public void setDelta(int delta) {
-        this.delta = delta;
+    public void setElevationGain(Integer elevationGain) {
+        this.elevationGain = elevationGain;
     }
 }

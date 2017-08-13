@@ -21,6 +21,15 @@ public class Activity {
     @CsvCustomBindByName(column = "Begin Timestamp", converter = LocalDateTimeConverterAlmostRfc1123.class)
     private LocalDateTime beginTimestamp;
 
+    @CsvBindByName(column = "Activity Type")
+    private String activityType;
+
+    @CsvBindByName(column = "Distance (Raw)")
+    private double distance;
+
+    @CsvBindByName(column = "Elevation Gain (Raw)")
+    private Double elevationGain;
+
     public String getId() {
         return id;
     }
@@ -51,5 +60,29 @@ public class Activity {
 
     public void setBeginTimestamp(LocalDateTime beginTimestamp) {
         this.beginTimestamp = beginTimestamp;
+    }
+
+    public String getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public Double getElevationGain() {
+        return elevationGain;
+    }
+
+    public void setElevationGain(Double elevationGain) {
+        this.elevationGain = elevationGain;
     }
 }
