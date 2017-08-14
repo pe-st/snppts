@@ -18,6 +18,9 @@ public class Fit {
     @CsvBindByPosition(position = 3)
     private Integer elevationGain;
 
+    @CsvBindByPosition(position = 4)
+    private double mmSs;
+
     public LocalDate getDatum() {
         return datum;
     }
@@ -48,5 +51,13 @@ public class Fit {
 
     public void setElevationGain(Integer elevationGain) {
         this.elevationGain = elevationGain;
+    }
+
+    public double getMmSs() {
+        return mmSs;
+    }
+
+    public void setMmSs(double mmSs) {
+        this.mmSs = mmSs;
     }
 }

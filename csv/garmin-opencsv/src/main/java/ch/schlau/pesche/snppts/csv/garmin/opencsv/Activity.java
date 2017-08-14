@@ -24,6 +24,9 @@ public class Activity {
     @CsvBindByName(column = "Activity Type")
     private String activityType;
 
+    @CsvBindByName(column = "Duration (Raw Seconds)")
+    private double duration;
+
     @CsvBindByName(column = "Distance (Raw)")
     private double distance;
 
@@ -68,6 +71,14 @@ public class Activity {
 
     public void setActivityType(String activityType) {
         this.activityType = activityType;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 
     public double getDistance() {
