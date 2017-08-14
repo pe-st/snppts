@@ -9,6 +9,8 @@ import ch.schlau.pesche.snppts.csv.garmin.opencsv.converter.LocalDateTimeConvert
 
 public class Activity {
 
+    public static final String ACTIVITY_TYPE = "Activity Type";
+
     @CsvBindByName(column = "Activity ID")
     private String id;
 
@@ -21,7 +23,7 @@ public class Activity {
     @CsvCustomBindByName(column = "Begin Timestamp", converter = LocalDateTimeConverterAlmostRfc1123.class)
     private LocalDateTime beginTimestamp;
 
-    @CsvBindByName(column = "Activity Type")
+    @CsvBindByName(column = ACTIVITY_TYPE)
     private String activityType;
 
     @CsvBindByName(column = "Duration (Raw Seconds)")

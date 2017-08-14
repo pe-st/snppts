@@ -20,25 +20,42 @@ public class GarminExportMain {
     @Parameter(names = { "--outputfile", "-o" })
     String outputFile;
 
-    public static void main(String ... argv) {
+    @Parameter(names = { "--filter", "-t" })
+    String activityType;
+
+    @Parameter(names = { "--verbose", "-v" })
+    boolean verbose;
+
+    @Parameter(names = { "--stats", "-s" })
+    boolean statistics;
+
+    public static void main(String... argv) {
 
         GarminExportMain main = new GarminExportMain();
         JCommander.newBuilder()
                 .addObject(main)
                 .build()
                 .parse(argv);
+        main.validateParameters();
         main.run();
     }
 
     public void run() {
 
         try {
-            List<Activity> activities = GarminExportReader.parse(filename);
+            List<Activity> activities = activityType == null
+                    ? GarminExportReader.parse(filename)
+                    : GarminExportReader.parse(filename, activityType);
 
             List<Fit> fitBeans = new ArrayList<>();
             for (Activity a : activities) {
                 fitBeans.add(FitMapper.INSTANCE.activityToFit(a));
-//                System.out.printf("%s %s\n", a.getBeginTimestamp(), a.getName());
+                if (verbose) {
+                    System.out.printf("%s %s %s\n", a.getBeginTimestamp(), a.getActivityType(), a.getName());
+                }
+            }
+            if (statistics) {
+                System.out.printf("\nFound %d entries.\n", activities.size());
             }
 
             try (Writer writer = createWriter()) {
@@ -56,6 +73,19 @@ public class GarminExportMain {
             return new OutputStreamWriter(System.out);
         } else {
             return new OutputStreamWriter(new FileOutputStream(outputFile));
+        }
+    }
+
+    private void validateParameters() {
+        if (outputFile == null) {
+            if (verbose) {
+                System.err.printf("--verbose not allowed without --outputFile, ignoring it");
+                verbose = false;
+            }
+            if (statistics) {
+                System.err.printf("--stats not allowed without --outputFile, ignoring it");
+                statistics = false;
+            }
         }
     }
 }

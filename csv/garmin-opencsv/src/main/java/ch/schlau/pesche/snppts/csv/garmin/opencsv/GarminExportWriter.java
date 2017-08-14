@@ -10,6 +10,10 @@ import com.opencsv.exceptions.CsvException;
 
 public class GarminExportWriter {
 
+    private GarminExportWriter() {
+        // Utility classes should not have public constructors
+    }
+
     public static void write(List<Fit> beans, Writer writer) throws IOException, CsvException {
         StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
                 .withMappingStrategy(new ColumnPositionWithHeaderStrategy(Fit.class))
