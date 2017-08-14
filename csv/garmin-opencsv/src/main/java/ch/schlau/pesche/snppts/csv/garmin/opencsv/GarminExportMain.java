@@ -51,11 +51,11 @@ public class GarminExportMain {
             for (Activity a : activities) {
                 fitBeans.add(FitMapper.INSTANCE.activityToFit(a));
                 if (verbose) {
-                    System.out.printf("%s %s %s\n", a.getBeginTimestamp(), a.getActivityType(), a.getName());
+                    System.out.printf("%s %s %s%n", a.getBeginTimestamp(), a.getActivityType(), a.getName());
                 }
             }
             if (statistics) {
-                System.out.printf("\nFound %d entries.\n", activities.size());
+                System.out.printf("%nFound %d entries.%n", activities.size());
             }
 
             try (Writer writer = createWriter()) {

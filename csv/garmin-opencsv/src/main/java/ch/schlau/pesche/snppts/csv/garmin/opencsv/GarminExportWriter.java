@@ -15,8 +15,8 @@ public class GarminExportWriter {
     }
 
     public static void write(List<Fit> beans, Writer writer) throws IOException, CsvException {
-        StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                .withMappingStrategy(new ColumnPositionWithHeaderStrategy(Fit.class))
+        StatefulBeanToCsv<Fit> beanToCsv = new StatefulBeanToCsvBuilder<Fit>(writer)
+                .withMappingStrategy(new ColumnPositionWithHeaderStrategy<Fit>(Fit.class))
                 .build();
         beanToCsv.write(beans);
     }

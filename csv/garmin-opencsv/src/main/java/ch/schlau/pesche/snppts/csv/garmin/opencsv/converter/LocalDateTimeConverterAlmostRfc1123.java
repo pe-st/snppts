@@ -8,7 +8,6 @@ import java.util.Locale;
 import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 /**
  * Custom converter to Java 8 {@link LocalDateTime} for the time stamps used in the Garmin Export.
@@ -21,7 +20,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 public class LocalDateTimeConverterAlmostRfc1123<T> extends AbstractBeanField<T> {
 
     @Override
-    protected Object convert(String value) throws CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, CsvConstraintViolationException {
+    protected Object convert(String value) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
 
         // Garmin uses "EEE, d MMM yyyy H:mm" while DateTimeFormatter.RFC_1123_DATE_TIME
         // would be    "EEE, d MMM yyyy HH:mm:ss 'GMT'"
