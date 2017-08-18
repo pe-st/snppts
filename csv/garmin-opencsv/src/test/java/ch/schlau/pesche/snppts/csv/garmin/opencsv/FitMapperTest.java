@@ -17,6 +17,7 @@ class FitMapperTest {
         // given
         Activity activity = new Activity();
         activity.setBeginTimestamp(LocalDateTime.parse("2017-06-11T11:02"));
+        activity.setName("Murtenlauf");
         activity.setDuration(80);
         activity.setDistance(42.195);
         activity.setElevationGain(365.38);
@@ -26,10 +27,11 @@ class FitMapperTest {
 
         // then
         assertThat(fit, not(is(nullValue())));
-        assertThat(fit.getDatum(), is(LocalDate.parse("2017-06-11")));
+        assertThat(fit.getDate(), is(LocalDate.parse("2017-06-11")));
         assertThat(fit.getKm(), is(42.195));
         assertThat(fit.getElevationGain(), is(365));
         assertThat(fit.getMmSs(), is(1.2));
+        assertThat(fit.getName(), is("Murtenlauf"));
     }
 
     @Test
@@ -42,10 +44,11 @@ class FitMapperTest {
 
         // then
         assertThat(fit, not(is(nullValue())));
-        assertThat(fit.getDatum(), is(nullValue()));
+        assertThat(fit.getDate(), is(nullValue()));
         assertThat(fit.getKm(), is(0.0));
         assertThat(fit.getElevationGain(), is(nullValue()));
         assertThat(fit.getMmSs(), is(0.0));
+        assertThat(fit.getName(), is(nullValue()));
     }
 
     @Test

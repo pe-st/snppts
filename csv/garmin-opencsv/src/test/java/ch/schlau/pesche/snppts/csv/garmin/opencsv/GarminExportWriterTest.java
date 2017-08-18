@@ -41,14 +41,17 @@ class GarminExportWriterTest {
         // then
         try (Scanner s = new Scanner(tempFile).useDelimiter("\\Z")) {
             String contents = s.next();
-            assertThat(contents, is("\"DATUM\",\"KM\",\"SHOES\",\"ELEVATIONGAIN\",\"MMSS\"\n"
-                    + "\"2017-06-11\",\"0.0\",\"\",\"\",\"0.0\""));
+            assertThat(contents, is("\"DATE\",\"KM\",\"SHOES\",\"ELEVATIONGAIN\",\"MMSS\",\"MINUTES\","
+                    + "\"PACE\",\"GRADEADJUSTEDPACE\",\"NAME\"\n"
+                    + "\"2017-06-11\",\"0.0\",\"\",\"\",\"0.0\","
+                    + "\"\",\"\",\"\",\"Parcours\""));
         }
     }
 
     private List<Fit> createBeans() {
         Fit fit = new Fit();
-        fit.setDatum(LocalDate.parse("2017-06-11"));
+        fit.setDate(LocalDate.parse("2017-06-11"));
+        fit.setName("Parcours");
         List<Fit> beans = new ArrayList<>();
         beans.add(fit);
         return beans;

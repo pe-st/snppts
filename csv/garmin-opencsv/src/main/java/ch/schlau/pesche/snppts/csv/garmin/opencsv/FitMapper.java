@@ -13,10 +13,15 @@ public interface FitMapper {
 
     FitMapper INSTANCE = Mappers.getMapper(FitMapper.class);
 
-    @Mapping(target = "datum", source = "beginTimestamp")
+    @Mapping(target = "date", source = "beginTimestamp")
     @Mapping(target = "km", source = "distance")
     @Mapping(target = "shoes", ignore = true)
+    @Mapping(target = "elevationGain", source = "elevationGain")
     @Mapping(target = "mmSs", source = "duration", qualifiedByName = "MMSS")
+    @Mapping(target = "minutes", ignore = true)
+    @Mapping(target = "pace", ignore = true)
+    @Mapping(target = "gradeAdjustedPace", ignore = true)
+    @Mapping(target = "name", source = "name")
     Fit activityToFit(Activity activity);
 
     default LocalDate map(LocalDateTime value) {
