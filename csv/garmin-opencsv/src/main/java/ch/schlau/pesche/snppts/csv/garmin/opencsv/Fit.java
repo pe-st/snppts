@@ -33,6 +33,18 @@ public class Fit {
     @CsvBindByPosition(position = 8)
     private String name;
 
+    @CsvBindByPosition(position = 9)
+    private Integer heartRate;
+
+    @CsvBindByPosition(position = 10)
+    private Integer calories;
+
+    @CsvBindByPosition(position = 11)
+    private Integer caloriesPercent;
+
+    @CsvBindByPosition(position = 12)
+    private String notes;
+
     public LocalDate getDate() {
         return date;
     }
@@ -103,5 +115,37 @@ public class Fit {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getHeartRate() {
+        return heartRate;
+    }
+
+    public void setHeartRate(Integer heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public Integer getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Integer calories) {
+        this.calories = calories;
+    }
+
+    public Integer getCaloriesPercent() {
+        return caloriesPercent;
+    }
+
+    public void setCaloriesPercent(Integer caloriesPercent) {
+        this.caloriesPercent = caloriesPercent;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

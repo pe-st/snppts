@@ -22,6 +22,10 @@ public interface FitMapper {
     @Mapping(target = "pace", ignore = true)
     @Mapping(target = "gradeAdjustedPace", ignore = true)
     @Mapping(target = "name", source = "name")
+    @Mapping(target = "heartRate", source = "heartRate")
+    @Mapping(target = "calories", source = "calories")
+    @Mapping(target = "caloriesPercent", ignore = true)
+    @Mapping(target = "notes", source = "description")
     Fit activityToFit(Activity activity);
 
     default LocalDate map(LocalDateTime value) {

@@ -26,6 +26,12 @@ public class Activity {
     @CsvBindByName(column = ACTIVITY_TYPE)
     private String activityType;
 
+    @CsvBindByName(column = "Average Heart Rate (bpm)")
+    private Integer heartRate;
+
+    @CsvBindByName(column = "Calories (Raw)")
+    private Double calories;
+
     @CsvBindByName(column = "Duration (Raw Seconds)")
     private double duration;
 
@@ -73,6 +79,22 @@ public class Activity {
 
     public void setActivityType(String activityType) {
         this.activityType = activityType;
+    }
+
+    public Integer getHeartRate() {
+        return heartRate;
+    }
+
+    public void setHeartRate(Integer heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public Double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Double calories) {
+        this.calories = calories;
     }
 
     public double getDuration() {
