@@ -8,7 +8,7 @@
     </extension>
     <option name="MAIN_CLASS_NAME" value="ch.schlau.pesche.snppts.csv.garmin.opencsv.GarminExportMain" />
     <option name="VM_PARAMETERS" value="" />
-    <option name="PROGRAM_PARAMETERS" value="-f ../../../gps/activities.csv -o target/fit.csv -v -s -t Running" />
+    <option name="PROGRAM_PARAMETERS" value="-f ../../../sports/activities.csv -o target/fit.csv -v -s -t Running" />
     <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
     <option name="ALTERNATIVE_JRE_PATH" />
