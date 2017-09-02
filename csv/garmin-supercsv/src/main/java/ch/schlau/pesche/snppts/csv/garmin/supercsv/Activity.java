@@ -12,6 +12,18 @@ public class Activity {
 
     private LocalDateTime beginTimestamp;
 
+    private String activityType;
+
+    private Integer heartRate;
+
+    private Double calories;
+
+    private double duration;
+
+    private double distance;
+
+    private Double elevationGain;
+
     public String getId() {
         return id;
     }
@@ -42,5 +54,53 @@ public class Activity {
 
     public void setBeginTimestamp(LocalDateTime beginTimestamp) {
         this.beginTimestamp = beginTimestamp;
+    }
+
+    public String getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
+    }
+
+    public Integer getHeartRate() {
+        return heartRate;
+    }
+
+    public void setHeartRate(Integer heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public Double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Double calories) {
+        this.calories = calories;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public Double getElevationGain() {
+        return elevationGain;
+    }
+
+    public void setElevationGain(Double elevationGain) {
+        this.elevationGain = elevationGain;
     }
 }

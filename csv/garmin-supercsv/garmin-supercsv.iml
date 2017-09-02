@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -14,6 +15,8 @@
     <orderEntry type="library" name="Maven: net.sf.supercsv:super-csv:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: net.sf.supercsv:super-csv-java8:2.4.0" level="project" />
     <orderEntry type="library" name="Maven: args4j:args4j:2.33" level="project" />
+    <orderEntry type="library" name="Maven: org.mapstruct:mapstruct-jdk8:1.1.0.Final" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.mapstruct:mapstruct-processor:1.1.0.Final" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.0.0-RC2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0-RC1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.0.0-RC2" level="project" />

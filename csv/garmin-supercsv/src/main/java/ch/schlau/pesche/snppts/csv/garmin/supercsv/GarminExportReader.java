@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ParseDouble;
+import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.constraint.UniqueHashCode;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -59,10 +61,19 @@ public class GarminExportReader {
                 "Name", // "Activity Name"
                 "Description",
                 "BeginTimestamp", // "Begin Timestamp"
-                null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null
+                null, null, null, null, null,
+                "ActivityType", // "Activity Type"
+                null, null, null, null, null, null, null, null, null, null, null,
+                "HeartRate", // "Average Heart Rate (bpm)"
+                null, null, null,
+                "Calories", // "Calories (Raw)"
+                null,
+                "Duration", // "Duration (Raw Seconds)"
+                null, null, null, null, null,
+                "Distance", // "Distance (Raw)"
+                null, null, null, null,
+                "ElevationGain", // "Elevation Gain (Raw)"
+                null, null
         };
     }
 
@@ -79,10 +90,20 @@ public class GarminExportReader {
                 new ParseLocalDateTime(almostRfc1123), // "Begin Timestamp"
 
                 // use 'null' for columns not mapped in the header
-                null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null
+                null, null, null, null, null,
+
+                new NotNull(), // "Activity Type"
+                null, null, null, null, null, null, null, null, null, null, null,
+                new Optional(new ParseInt()), // "Average Heart Rate (bpm)"
+                null, null, null,
+                new Optional(new ParseDouble()), // "Calories (Raw)"
+                null,
+                new ParseDouble(), // "Duration (Raw Seconds)"
+                null, null, null, null, null,
+                new ParseDouble(), // "Distance (Raw)"
+                null, null, null, null,
+                new Optional(new ParseDouble()), // "Elevation Gain (Raw)"
+                null, null
         };
     }
 }
