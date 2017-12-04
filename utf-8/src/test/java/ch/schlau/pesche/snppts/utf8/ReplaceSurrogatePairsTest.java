@@ -26,6 +26,18 @@ class ReplaceSurrogatePairsTest {
     }
 
     @Test
+    public void lengthInvariantSurrogateReplace_result() {
+
+        // for these examples the function must be an invariant
+        assertThat(lengthInvariantSurrogateReplace(FRENCH_ACCENTS, '.'), is(FRENCH_ACCENTS));
+        assertThat(lengthInvariantSurrogateReplace(NOT_IN_8859_1, '.'), is(NOT_IN_8859_1));
+        assertThat(lengthInvariantSurrogateReplace(INVALID_UTF_8, '.'), is(INVALID_UTF_8));
+
+        // the example with the surrogate pair mustn't contain any surrogates in the result anymore
+        assertThat(lengthInvariantSurrogateReplace(FACE_WITH_TEARS_OF_JOY, '.'), is(".."));
+    }
+
+    @Test
     public void categoriseByIteration_length_notInvariant() {
 
         assertThat(categoriseByOffsetIteration(FACE_WITH_TEARS_OF_JOY).length(), is(lessThan(FACE_WITH_TEARS_OF_JOY.length())));

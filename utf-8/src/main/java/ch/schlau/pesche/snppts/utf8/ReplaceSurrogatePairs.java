@@ -8,7 +8,7 @@ public class ReplaceSurrogatePairs {
     /**
      * Replace any surrogate pairs in the input with two other chars.
      * <p>
-     * The goal is to protect a string from a lenght change before converting it to an encoding
+     * The goal is to protect a string from a length change before converting it to an encoding
      * like ISO-8859-1 where a surrogate pair is replaced by a single '?' character, thus
      * changing the length of the string.
      *
