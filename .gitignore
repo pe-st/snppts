@@ -16,8 +16,10 @@ hs_err_pid*
 **/.idea/dictionaries/
 **/.idea/kotlinc.xml
 **/.idea/libraries/
-**/.idea/sonarlint/issuestore/
-**/.idea/markdown-navigator/
 **/.idea/markdown-navigator.xml
-**/.idea/workspace.xml
+**/.idea/markdown-navigator/
+**/.idea/saveactions_settings.xml
+**/.idea/sonarlint/issuestore/
 **/.idea/tasks.xml
+**/.idea/uiDesigner.xml
+**/.idea/workspace.xml
