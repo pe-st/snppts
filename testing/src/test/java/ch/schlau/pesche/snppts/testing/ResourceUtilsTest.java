@@ -13,4 +13,11 @@ class ResourceUtilsTest {
         ResourceUtils resourceUtils = new ResourceUtils();
         assertThat(resourceUtils.stringFromResourceFile("42.txt"), is("42"));
     }
+
+    @Test
+    public void stringFromResourceFileIO_42() {
+
+        ResourceUtils resourceUtils = new ResourceUtils();
+        assertThat(resourceUtils.stringFromResourceFileIO("42.txt"), is("42"));
+    }
 }
