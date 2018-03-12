@@ -19,9 +19,10 @@
 
         <!-- artifact versions -->
         <slf4j.version>1.7.25</slf4j.version>
+        <logback.version>1.2.3</logback.version>
         <commons-io.version>2.6</commons-io.version>
-        <junit.platform.version>1.0.2</junit.platform.version>
-        <junit.jupiter.version>5.0.2</junit.jupiter.version>
+        <junit.platform.version>1.1.0</junit.platform.version>
+        <junit.jupiter.version>5.1.0</junit.jupiter.version>
         <hamcrest.version>2.0.0.0</hamcrest.version>
 
         <!-- maven plugin versions (in alphabetical order) -->
@@ -41,6 +42,14 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
+        </dependency>
+
+        <!-- testing dependencies -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
