@@ -113,7 +113,7 @@ public class SlidingTimeWindowMeter extends Meter {
         }
 
         //        System.out.printf("oldestBucketIndex %d newestToClean %d\n", oldestBucketIndex, newestToClean);
-        if (oldestBucketIndex < newestToClean) {
+        if (oldestBucketIndex <= newestToClean) {
             for (int i = oldestBucketIndex; i <= newestToClean; i++) {
                 buckets.get(i).reset();
             }
@@ -128,11 +128,12 @@ public class SlidingTimeWindowMeter extends Meter {
         oldestBucketIndex = normalizeIndex(newestToClean + 1);
     }
 
-    private long sumBuckets(long fromTime, long toTime) {
+    private long sumBuckets(long fromTime, int numberOfBuckets) {
         LongAdder adder = new LongAdder();
-        int fromIndex = calculateIndexOfTick(Math.max(oldestBucketTime, fromTime));
-        int toIndex = calculateIndexOfTick(toTime);
-        //        System.out.printf("sumBuckets %d..%d, %d..%d\n", fromTime, toTime, fromIndex, toIndex);
+        int toIndex = calculateIndexOfTick(Math.max(oldestBucketTime, fromTime));
+        // increment toIndex to include the burrent bucket into the sum
+        toIndex = normalizeIndex(toIndex + 1);
+        int fromIndex = normalizeIndex(toIndex - numberOfBuckets);
         if (fromIndex < toIndex) {
             buckets.stream().skip(fromIndex).limit(toIndex - fromIndex).mapToLong(LongAdder::longValue).forEach(adder::add);
         } else {
@@ -161,20 +162,20 @@ public class SlidingTimeWindowMeter extends Meter {
     public double getFifteenMinuteRate() {
         updateLastTickIfNecessary();
         long now = lastTick.get();
-        return sumBuckets(now - TimeUnit.MINUTES.toNanos(15), now);
+        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(15) / TICK_INTERVAL));
     }
 
     @Override
     public double getFiveMinuteRate() {
         updateLastTickIfNecessary();
         long now = lastTick.get();
-        return sumBuckets(now - TimeUnit.MINUTES.toNanos(5), now);
+        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(5) / TICK_INTERVAL));
     }
 
     @Override
     public double getOneMinuteRate() {
         updateLastTickIfNecessary();
         long now = lastTick.get();
-        return sumBuckets(now - TimeUnit.MINUTES.toNanos(1), now);
+        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(1) / TICK_INTERVAL));
     }
 }
