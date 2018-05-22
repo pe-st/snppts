@@ -55,7 +55,6 @@ class SlidingTimeWindowMeterTest {
     }
 
     @Test
-    @Disabled("doesn't work yet")
     public void cleanOldBuckets_first_cleanup() {
         // given
         simulateTicksForSeconds(TimeUnit.MINUTES.toSeconds(TIME_WINDOW_DURATION_MINUTES));
@@ -121,9 +120,10 @@ class SlidingTimeWindowMeterTest {
     private void simulateTicksForSeconds(long seconds) {
 
         // add some ticks for the calls to getOneMinuteRate etc
+        // these additional ticks should not advance the time however
         long numberOfTicks = 10L + seconds;
         simulateTicks(LongStream
-                .range(0L, numberOfTicks).map(TimeUnit.SECONDS::toNanos)
+                .range(0L, numberOfTicks).map(i -> TimeUnit.SECONDS.toNanos(Math.min(i, seconds)))
                 .boxed().collect(Collectors.toList()));
 
     }
