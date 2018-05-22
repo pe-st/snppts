@@ -4,9 +4,9 @@ import static ch.schlau.pesche.snppts.metrics.SlidingTimeWindowMeter.NUMBER_OF_B
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.codahale.metrics.Clock;
@@ -53,8 +53,8 @@ class SlidingTimeWindowMeterTest {
     @Test
     public void calculateIndexOfTick() {
 
-        assertThat(stwm.calculateIndexOfTick(0L), is(0));
-        assertThat(stwm.calculateIndexOfTick(TimeUnit.SECONDS.toNanos(1)), is(1));
+        assertThat(stwm.calculateIndexOfTick(Instant.ofEpochSecond(0L)), is(0));
+        assertThat(stwm.calculateIndexOfTick(Instant.ofEpochSecond(1L)), is(1));
     }
 
     @Test
@@ -103,7 +103,6 @@ class SlidingTimeWindowMeterTest {
     }
 
     @Test
-    @Disabled("doesn't work yet")
     public void counts_1000_values() {
 
         for (int i = 0; i < 1000; i++) {
