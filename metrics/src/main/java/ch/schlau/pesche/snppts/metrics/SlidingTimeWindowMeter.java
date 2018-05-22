@@ -10,9 +10,10 @@ import com.codahale.metrics.Meter;
 
 public class SlidingTimeWindowMeter extends Meter {
 
+    static final long TIME_WINDOW_DURATION_MINUTES = 15;
     private static final long TICK_INTERVAL = TimeUnit.SECONDS.toNanos(1);
-    private static final long TIME_WINDOW_DURATION = TimeUnit.MINUTES.toNanos(15);
-    private static final int NUMBER_OF_BUCKETS = (int) (TIME_WINDOW_DURATION / TICK_INTERVAL);
+    private static final long TIME_WINDOW_DURATION_TICKS = TimeUnit.MINUTES.toNanos(TIME_WINDOW_DURATION_MINUTES);
+    static final int NUMBER_OF_BUCKETS = (int) (TIME_WINDOW_DURATION_TICKS / TICK_INTERVAL);
 
     private final LongAdder count = new LongAdder();
     private final long startTime;
@@ -82,7 +83,7 @@ public class SlidingTimeWindowMeter extends Meter {
         if (age >= TICK_INTERVAL) {
             final long newLastTick = newTick - age % TICK_INTERVAL;
             if (lastTick.compareAndSet(oldTick, newLastTick)) {
-                currentBucketIndex = calculateIndexOfTick(newLastTick);
+                currentBucketIndex = normalizeIndex(calculateIndexOfTick(newLastTick));
                 //                System.out.printf("newTick %d currentBucketIndex %d\n", newLastTick, currentBucketIndex);
                 cleanOldBuckets(newLastTick);
             }
@@ -100,13 +101,13 @@ public class SlidingTimeWindowMeter extends Meter {
 
     private void cleanOldBuckets(long currentTick) {
         int newestToClean;
-        if (currentTick > oldestBucketTime + 2 * TIME_WINDOW_DURATION) {
+        if (currentTick > oldestBucketTime + 2 * TIME_WINDOW_DURATION_TICKS) {
             // clean all...
             newestToClean = normalizeIndex(oldestBucketIndex - 1);
             oldestBucketTime = currentTick;
-        } else if (currentTick > oldestBucketTime + TIME_WINDOW_DURATION) {
-            newestToClean = normalizeIndex(calculateIndexOfTick(currentTick - TIME_WINDOW_DURATION));
-            oldestBucketTime = currentTick - TIME_WINDOW_DURATION + TICK_INTERVAL;
+        } else if (currentTick > oldestBucketTime + TIME_WINDOW_DURATION_TICKS) {
+            newestToClean = normalizeIndex(calculateIndexOfTick(currentTick - TIME_WINDOW_DURATION_TICKS));
+            oldestBucketTime = currentTick - TIME_WINDOW_DURATION_TICKS + TICK_INTERVAL;
         } else {
             return;
         }
