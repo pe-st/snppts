@@ -2,11 +2,13 @@ package ch.schlau.pesche.snppts.metrics;
 
 import static ch.schlau.pesche.snppts.metrics.SlidingTimeWindowMeter.NUMBER_OF_BUCKETS;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.codahale.metrics.Clock;
@@ -31,12 +33,17 @@ class SlidingTimeWindowMeterTest {
     private final MockingClock mockingClock = new MockingClock();
 
     // use a Meter as variable to make sure a SlidingTimeWindowMeter can replace a Meter
-    private final Meter meter = new SlidingTimeWindowMeter(mockingClock);
+    private Meter meter;
 
-    private final SlidingTimeWindowMeter stwm = new SlidingTimeWindowMeter(mockingClock);
+    @BeforeEach
+    void init() {
+        meter = new SlidingTimeWindowMeter(mockingClock);
+    }
 
     @Test
     void normalizeIndex() {
+
+        SlidingTimeWindowMeter stwm = new SlidingTimeWindowMeter();
 
         assertThat(stwm.normalizeIndex(0), is(0));
         assertThat(stwm.normalizeIndex(900), is(0));
@@ -53,6 +60,8 @@ class SlidingTimeWindowMeterTest {
     @Test
     public void calculateIndexOfTick() {
 
+        SlidingTimeWindowMeter stwm = new SlidingTimeWindowMeter(new MockingClock());
+
         assertThat(stwm.calculateIndexOfTick(Instant.ofEpochSecond(0L)), is(0));
         assertThat(stwm.calculateIndexOfTick(Instant.ofEpochSecond(1L)), is(1));
     }
@@ -67,29 +76,34 @@ class SlidingTimeWindowMeterTest {
             meter.mark();
         }
 
-        // then
+        // verify that no cleanup happened yet
+        assertThat(((SlidingTimeWindowMeter)meter).oldestBucketTime, is(Instant.ofEpochSecond(0L)));
+
         assertThat(meter.getOneMinuteRate(), is(60.0));
         assertThat(meter.getFiveMinuteRate(), is(300.0));
         assertThat(meter.getFifteenMinuteRate(), is(900.0));
     }
 
     @Test
-    public void cleanOldBuckets_first_cleanup() {
+    public void mark_first_cleanup() {
 
-        // when
-        for (int i = 0; i < NUMBER_OF_BUCKETS; i++) {
+        int markCount = NUMBER_OF_BUCKETS + 1;
+
+        for (int i = 0; i < markCount; i++) {
             mockingClock.setNextTick(TimeUnit.SECONDS.toNanos(i));
             meter.mark();
         }
 
-        // then
+        // verify that at least one cleanup happened
+        assertThat(((SlidingTimeWindowMeter)meter).oldestBucketTime, not(is(Instant.ofEpochSecond(0L))));
+
         assertThat(meter.getOneMinuteRate(), is(60.0));
-        assertThat(meter.getFiveMinuteRate(), is(300.0)); // 299
-        assertThat(meter.getFifteenMinuteRate(), is(900.0)); // 898
+        assertThat(meter.getFiveMinuteRate(), is(300.0));
+        assertThat(meter.getFifteenMinuteRate(), is(900.0));
     }
 
     @Test
-    public void counts_10_values() {
+    public void mark_10_values() {
 
         for (int i = 0; i < 10; i++) {
             mockingClock.setNextTick(TimeUnit.SECONDS.toNanos(i));
@@ -103,7 +117,7 @@ class SlidingTimeWindowMeterTest {
     }
 
     @Test
-    public void counts_1000_values() {
+    public void mark_1000_values() {
 
         for (int i = 0; i < 1000; i++) {
             mockingClock.setNextTick(TimeUnit.SECONDS.toNanos(i));
