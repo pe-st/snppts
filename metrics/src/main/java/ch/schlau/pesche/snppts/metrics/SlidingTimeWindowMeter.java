@@ -7,10 +7,15 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.codahale.metrics.Clock;
 import com.codahale.metrics.Meter;
 
 public class SlidingTimeWindowMeter extends Meter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SlidingTimeWindowMeter.class);
 
     private static final long TIME_WINDOW_DURATION_MINUTES = 15;
     private static final long TICK_INTERVAL = TimeUnit.SECONDS.toNanos(1);
@@ -76,7 +81,8 @@ public class SlidingTimeWindowMeter extends Meter {
         updateLastTickIfNecessary();
         count.add(n);
         buckets.get(currentBucketIndex).add(n);
-        // System.out.printf("mark %d currentBucketIndex %d, count %d\n", n, currentBucketIndex, buckets.get(currentBucketIndex).longValue());
+        LOGGER.trace("mark({}) : current bucket (idx/cnt): ({}/{})",
+                n, currentBucketIndex, buckets.get(currentBucketIndex).longValue());
     }
 
     private void updateLastTickIfNecessary() {
@@ -89,7 +95,7 @@ public class SlidingTimeWindowMeter extends Meter {
             if (lastTick.compareAndSet(oldTick, newLastTick)) {
                 Instant currentInstant = Instant.ofEpochSecond(0L, newLastTick);
                 currentBucketIndex = normalizeIndex(calculateIndexOfTick(currentInstant));
-                // System.out.printf("newTick %d currentBucketIndex %d\n", newLastTick, currentBucketIndex);
+                LOGGER.debug("new 'current bucket' {} for instant {}", currentBucketIndex, currentInstant);
                 cleanOldBuckets(currentInstant);
             }
         }
@@ -108,18 +114,21 @@ public class SlidingTimeWindowMeter extends Meter {
         int newOldestIndex;
         Instant oldestStillNeededTime = currentTick.minus(TIME_WINDOW_DURATION).plusNanos(TICK_INTERVAL);
         Instant youngestNotInWindow = oldestBucketTime.plus(TIME_WINDOW_DURATION);
+        LOGGER.trace("current/oldest/stillNeeded/youngestNot {}/{}/{}/{}",
+                currentTick, oldestBucketTime, oldestStillNeededTime, youngestNotInWindow);
         if (oldestStillNeededTime.isAfter(youngestNotInWindow)) {
-            // clean all...
             newOldestIndex = oldestBucketIndex;
+            LOGGER.debug("cleanup: throw away all values, old/new 'oldest': {}/{}", oldestBucketTime, currentTick);
             oldestBucketTime = currentTick;
         } else if (oldestStillNeededTime.isAfter(oldestBucketTime)) {
             newOldestIndex = normalizeIndex(calculateIndexOfTick(oldestStillNeededTime));
+            LOGGER.debug("cleanup: old/new index {}/{}, old/new 'oldest': {}/{}",
+                    oldestBucketIndex, newOldestIndex, oldestBucketTime, currentTick);
             oldestBucketTime = oldestStillNeededTime;
         } else {
             return;
         }
 
-        // System.out.printf("oldestBucketIndex %d newOldestIndex %d\n", oldestBucketIndex, newOldestIndex);
         if (oldestBucketIndex < newOldestIndex) {
             for (int i = oldestBucketIndex; i < newOldestIndex; i++) {
                 buckets.get(i).reset();
@@ -152,7 +161,10 @@ public class SlidingTimeWindowMeter extends Meter {
             buckets.stream().limit(toIndex).mapToLong(LongAdder::longValue).forEach(adder::add);
             buckets.stream().skip(fromIndex).mapToLong(LongAdder::longValue).forEach(adder::add);
         }
-        return adder.longValue();
+        long retval = adder.longValue();
+        LOGGER.info("sum at {} over {} buckets = {}, current/from/to index {}/{}/{}, oldest index/time {}/{}",
+                toTime, numberOfBuckets, retval, currentBucketIndex, fromIndex, toIndex, oldestBucketIndex, oldestBucketTime);
+        return retval;
     }
 
     @Override
