@@ -3,6 +3,7 @@ package ch.schlau.pesche.snppts.json.emv;
 import static net.javacrumbs.jsonunit.JsonMatchers.jsonPartEquals;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,16 +11,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class IccRelatedDataTest {
+class IccRelatedDataTest {
 
     private static final String BASE64_39 = Base64.getEncoder().encodeToString("39".getBytes(StandardCharsets.ISO_8859_1));
     private static final String BASE64_123 = Base64.getEncoder().encodeToString("123".getBytes(StandardCharsets.ISO_8859_1));
@@ -33,11 +32,8 @@ public class IccRelatedDataTest {
     private final ResourceReader resourceReader = new ResourceReader();
     private ObjectMapper jsonMapper = new ObjectMapper();
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
-    public void unmarshal_example_file() throws IOException {
+    void unmarshal_example_file() throws IOException {
 
         ByteArrayInputStream bis = resourceReader.streamFromResourceFile("json/icc-related.json");
         JsonParser parser = jsonMapper.getFactory().createParser(bis);
@@ -50,7 +46,7 @@ public class IccRelatedDataTest {
     }
 
     @Test
-    public void unmarshal_example_old() throws IOException {
+    void unmarshal_example_old() throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(JSON_WITH_CONTENT.getBytes(StandardCharsets.UTF_8));
         IccRelatedData iccRelatedData = jsonMapper.readValue(bis, IccRelatedData.class);
@@ -60,7 +56,7 @@ public class IccRelatedDataTest {
     }
 
     @Test
-    public void unmarshal_compact() throws IOException {
+    void unmarshal_compact() throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream(JSON_WITHOUT_CONTENT.getBytes(StandardCharsets.UTF_8));
         IccRelatedData iccRelatedData = jsonMapper.readValue(bis, IccRelatedData.class);
@@ -70,16 +66,15 @@ public class IccRelatedDataTest {
     }
 
     @Test
-    public void unmarshal_malformed() throws IOException {
-
-        thrown.expect(JsonParseException.class);
+    void unmarshal_malformed() throws IOException {
 
         ByteArrayInputStream bis = new ByteArrayInputStream("{\"8A\" : null".getBytes(StandardCharsets.UTF_8));
-        jsonMapper.readValue(bis, IccRelatedData.class);
+
+        assertThrows(JsonParseException.class, () -> jsonMapper.readValue(bis, IccRelatedData.class));
     }
 
     @Test
-    public void marshal_content() throws IOException {
+    void marshal_content() throws IOException {
         // given
         IccRelatedData iccRelatedData = new IccRelatedData();
         iccRelatedData.setTag(EmvTag.TERMINAL_COUNTRY_CODE, new EmvData(new byte[] { 0, 2 }));
@@ -94,7 +89,7 @@ public class IccRelatedDataTest {
     }
 
     @Test
-    public void marshal_nullValue() throws IOException {
+    void marshal_nullValue() throws IOException {
         // given
         IccRelatedData iccRelatedData = new IccRelatedData();
         iccRelatedData.setTag(EmvTag.TERMINAL_COUNTRY_CODE, null);
@@ -109,7 +104,7 @@ public class IccRelatedDataTest {
     }
 
     @Test
-    public void json_roundtrip() throws IOException {
+    void json_roundtrip() throws IOException {
         // given
         IccRelatedData iccRelatedData = new IccRelatedData();
         iccRelatedData.setTag(EmvTag.TERMINAL_COUNTRY_CODE, new EmvData(new byte[] { 0, 2 }));

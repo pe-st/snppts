@@ -9,12 +9,12 @@ import java.time.ZoneOffset;
 
 import org.junit.jupiter.api.Test;
 
-public class OffsetToUtcTest {
+class OffsetToUtcTest {
 
-    OffsetToUtc mapper = new OffsetToUtc();
+    private OffsetToUtc mapper = new OffsetToUtc();
 
     @Test
-    public void mapToUtc() throws Exception {
+    void mapToUtc() throws Exception {
         OffsetDateTime odt = OffsetDateTime.of(2016, 03, 15, 4, 12, 23, 0, ZoneOffset.ofHours(3));
         assertThat(mapper.mapToUtc(odt), is(LocalDateTime.of(2016, 03, 15, 1, 12, 23)));
     }

@@ -18,7 +18,7 @@ class BorderCasesTest {
     private static final Locale SWITZERLAND_FR = new Locale("fr", "ch");
 
     @Test
-    public void week_localeDependent_output() {
+    void week_localeDependent_output() {
 
         // given
         final DateTimeFormatter dateSundayFirst = DateTimeFormatter.ofPattern("YYYY-MM-dd", Locale.US);
@@ -33,7 +33,7 @@ class BorderCasesTest {
     }
 
     @Test
-    public void week_fromNextYear_output() {
+    void week_fromNextYear_output() {
 
         // given
         final DateTimeFormatter yearOfEra = DateTimeFormatter.ofPattern("yyyy-MM-dd", SWITZERLAND_DE);
@@ -48,7 +48,7 @@ class BorderCasesTest {
     }
 
     @Test
-    public void week_fromNextYear_parse() {
+    void week_fromNextYear_parse() {
 
         // given
         final DateTimeFormatter prolepticYear = DateTimeFormatter.ofPattern("uuuu-MM-dd", SWITZERLAND_DE);
@@ -67,7 +67,7 @@ class BorderCasesTest {
     }
 
     @Test
-    public void date_beforeChrist_output() {
+    void date_beforeChrist_output() {
 
         // given
         final DateTimeFormatter prolepticYear = DateTimeFormatter.ofPattern("uuuu-MM-dd", SWITZERLAND_FR);

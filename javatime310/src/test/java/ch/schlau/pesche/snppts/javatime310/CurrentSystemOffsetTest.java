@@ -8,10 +8,10 @@ import java.time.ZoneId;
 
 import org.junit.jupiter.api.Test;
 
-public class CurrentSystemOffsetTest {
+class CurrentSystemOffsetTest {
 
     @Test
-    public void offsetInSeconds_system() {
+    void offsetInSeconds_system() {
 
         // this assumes that the test is run in Switzerland
         assertThat(CurrentSystemOffset.offsetInSeconds(ZoneId.systemDefault()), anyOf(is(3600), is(7200)));
