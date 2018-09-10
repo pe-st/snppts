@@ -3,8 +3,13 @@ package ch.schlau.pesche.snppts.functional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+
+import io.vavr.control.Option;
 
 class Java8OptionalTest {
 
@@ -38,5 +43,15 @@ class Java8OptionalTest {
 
         assertThat(Java8Optional.callFunctionVavr("gugus"), is("sugug"));
         assertThat(Java8Optional.callFunctionVavr(null), is(nullValue()));
+    }
+
+    @Test
+    void flatMap_functionReturningNull() {
+
+        // Java 8 Optional
+        assertThrows(NullPointerException.class, () -> Optional.ofNullable("42").flatMap(v -> null));
+
+        // Vavr Option
+        assertThat(Option.of("42").flatMap(v -> null), is(nullValue()));
     }
 }
