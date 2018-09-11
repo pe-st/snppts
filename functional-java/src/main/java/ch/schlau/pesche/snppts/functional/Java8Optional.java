@@ -45,4 +45,23 @@ public class Java8Optional {
         Option<String> optionalString = Option.of(nullableString);
         return optionalString.map(StringUtils::reverse).getOrNull();
     }
+
+    public static void callConsumerFunctionalStyle(String nullableString) {
+        Optional<String> optionalString = Optional.ofNullable(nullableString);
+        optionalString.ifPresent(s -> System.out.printf("consuming %s\n", s));
+
+        // In Java 8 there is no proper solution for if-not-present, here's a workaround returning an ignored null
+        // In Java 9 there is ifPresentOrElse
+        optionalString.orElseGet(() -> {
+            System.out.printf("consuming null\n");
+            return null;
+        });
+    }
+
+    public static void callConsumerVavr(String nullableString) {
+        Option<String> optionalString = Option.of(nullableString);
+        optionalString
+                .peek(s -> System.out.printf("1=%s\n", s)).peek(s -> System.out.printf("2=%s\n", s))
+                .onEmpty(() -> System.out.printf("3=null\n"));
+    }
 }

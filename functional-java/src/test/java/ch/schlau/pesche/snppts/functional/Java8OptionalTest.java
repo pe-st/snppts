@@ -3,6 +3,7 @@ package ch.schlau.pesche.snppts.functional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Optional;
@@ -43,6 +44,19 @@ class Java8OptionalTest {
 
         assertThat(Java8Optional.callFunctionVavr("gugus"), is("sugug"));
         assertThat(Java8Optional.callFunctionVavr(null), is(nullValue()));
+    }
+
+    /**
+     * nullsafe call to System.out.printf
+     */
+    @Test
+    void callConsumerNullsafe() {
+
+        assertDoesNotThrow(() -> Java8Optional.callConsumerFunctionalStyle("gugus"));
+        assertDoesNotThrow(() -> Java8Optional.callConsumerFunctionalStyle(null));
+
+        assertDoesNotThrow(() -> Java8Optional.callConsumerVavr("gugus"));
+        assertDoesNotThrow(() -> Java8Optional.callConsumerVavr(null));
     }
 
     @Test
