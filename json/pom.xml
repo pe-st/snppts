@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- 'de facto' Java major version number, e.g. 8 for Java 1.8, and 9 for Java 9, see JEP223 -->
-        <java.defacto.version>8</java.defacto.version>
+        <java.defacto.version>11</java.defacto.version>
 
         <!-- artifact versions -->
         <apache.commons.lang3.version>3.8.1</apache.commons.lang3.version>
