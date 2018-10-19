@@ -15,7 +15,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <java.major.version>8</java.major.version>
+        <!-- 'de facto' Java major version number, e.g. 8 for Java 1.8, and 9 for Java 9, see JEP223 -->
+        <java.defacto.version>8</java.defacto.version>
 
         <!-- artifact versions -->
         <apache.commons.lang3.version>3.8.1</apache.commons.lang3.version>
@@ -62,6 +63,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>java-hamcrest</artifactId>
             <version>${hamcrest.version}</version>
@@ -84,6 +91,7 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
             </plugin>
@@ -91,44 +99,51 @@
     </build>
 
     <profiles>
-    <profile>
-        <id>java9plus</id>
-        <activation>
-            <jdk>[9,)</jdk>
-        </activation>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven.compiler.plugin.version}</version>
-                    <configuration>
-                        <!-- starting with Java 9 javac should be called with -release N -->
-                        <release>${java.major.version}</release>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
-    <profile>
-        <id>java8</id>
-        <activation>
-            <jdk>1.8</jdk>
-        </activation>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven.compiler.plugin.version}</version>
-                    <configuration>
-                        <!-- Java 8 is the last version where `javac` should be called with -source N -target N -->
-                        <source>1.${java.major.version}</source>
-                        <target>1.${java.major.version}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
+        <profile>
+            <id>java9plus</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.plugin.version}</version>
+                        <configuration>
+                            <!-- starting with Java 9 javac should be called with -release N -->
+                            <release>${java.defacto.version}</release>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                    <version>2.3.1</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>java8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.plugin.version}</version>
+                        <configuration>
+                            <!-- Java 8 is the last version where `javac` should be called with -source 1.N -target 1.N -->
+                            <source>1.${java.defacto.version}</source>
+                            <target>1.${java.defacto.version}</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
