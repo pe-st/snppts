@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ch.schlau.pesche.snppts</groupId>
+    <artifactId>pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>${project.groupId}.${project.artifactId}</name>
+
+    <modules>
+        <module>sub</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Override this with `11` in your application POM if so desired. -->
+        <!-- Until Java 8 is a thing of the past we have to live with two versioning schemes (see JEP223): -->
+        <!-- - the Java release (the 'de facto' Java major version number, e.g. 8 for Java 1.8, and 9 for Java 9), -->
+        <!--   supported in the compiler plugin as `<release>` for JDK 9 and later -->
+        <!-- - the official Java version number, e.g. 1.8 for Java 1.8, and 9 for Java 9 -->
+        <!--   (this is used for 'legacy' interfaces, e.g. the -source/-target switches of javac) -->
+        <java.release>8</java.release>
+
+        <!-- Used only with JDK 1.8 -->
+        <java.version>1.8</java.version>
+
+        <!-- apache maven plugin versions (in alphabetical order) -->
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>java9plus</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.plugin.version}</version>
+                        <configuration>
+                            <!-- starting with Java 9 javac should be called with -release N -->
+                            <release>${java.release}</release>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>java8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.plugin.version}</version>
+                        <configuration>
+                            <!-- Java 8 is the last version where `javac` should be called with -source N -target N -->
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
