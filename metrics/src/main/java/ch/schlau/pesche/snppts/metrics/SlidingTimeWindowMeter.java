@@ -13,6 +13,24 @@ import org.slf4j.LoggerFactory;
 import com.codahale.metrics.Clock;
 import com.codahale.metrics.Meter;
 
+/**
+ * A meter metric which measures mean throughput and one-, five-, and fifteen-minute
+ * simple (arithmetic) moving average throughputs.
+ * <p>
+ * The moving averages are unweighted, i.e. they include strictly only the events in the
+ * sliding time window, every event having the same weight. Unlike the more widely used
+ * {@link Meter} with an exponentially-weighted moving average ({@link com.codahale.metrics.EWMA}),
+ * with this class the moving average rate drops immediately to zero if the last
+ * marked event is older than the time window.
+ * <p>
+ * A {@link SlidingTimeWindowMeter} works similarly to
+ * a {@link com.codahale.metrics.Histogram} with an
+ * {@link com.codahale.metrics.SlidingTimeWindowArrayReservoir}, but as a Meter
+ * needs to keep track only of the count of events (not the events itself), the memory
+ * overhead is much smaller. SlidingTimeWindowMeter uses buckets with just one
+ * counter to accumulate the number of events (one bucket per seconds, giving 900 buckets
+ * for the 15 minutes time window).
+ */
 public class SlidingTimeWindowMeter extends Meter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SlidingTimeWindowMeter.class);
@@ -30,10 +48,31 @@ public class SlidingTimeWindowMeter extends Meter {
     private final AtomicLong lastTick;
     private final Clock clock;
 
+    /**
+     * One counter per time bucket/slot (i.e. per second, see TICK_INTERVAL) for the entire
+     * time window (i.e. 15 minutes, see TIME_WINDOW_DURATION_MINUTES)
+     */
     private ArrayList<LongAdder> buckets;
+
+    /**
+     * Index into buckets, pointing at the bucket containing the oldest counts
+     */
     private int oldestBucketIndex;
+
+    /**
+     * Index into buckets, pointing at the bucket with the count for the current time (tick)
+     */
     private int currentBucketIndex;
+
+    /**
+     * Instant at creation time of the time window. Used to calculate the currentBucketIndex
+     * for the instant of a given tick (instant modulo time window duration)
+     */
     private final Instant bucketBaseTime;
+
+    /**
+     * Instant of the bucket with index oldestBucketIndex
+     */
     Instant oldestBucketTime;
 
     /**
@@ -91,6 +130,8 @@ public class SlidingTimeWindowMeter extends Meter {
         // System.out.printf("oldTick %d newTick %d\n", oldTick, newTick);
         final long age = newTick - oldTick;
         if (age >= TICK_INTERVAL) {
+            // - the newTick doesn't fall into the same slot as the oldTick anymore
+            // - newLastTick is the lower border time of the new currentBucketIndex slot
             final long newLastTick = newTick - age % TICK_INTERVAL;
             if (lastTick.compareAndSet(oldTick, newLastTick)) {
                 Instant currentInstant = Instant.ofEpochSecond(0L, newLastTick);
@@ -99,6 +140,29 @@ public class SlidingTimeWindowMeter extends Meter {
                 cleanOldBuckets(currentInstant);
             }
         }
+    }
+
+    @Override
+    public double getFifteenMinuteRate() {
+        updateLastTickIfNecessary();
+        return getMinuteRate(15);
+    }
+
+    @Override
+    public double getFiveMinuteRate() {
+        updateLastTickIfNecessary();
+        return getMinuteRate(5);
+    }
+
+    @Override
+    public double getOneMinuteRate() {
+        updateLastTickIfNecessary();
+        return getMinuteRate(1);
+    }
+
+    private double getMinuteRate(int minutes) {
+        Instant now = Instant.ofEpochSecond(0L, lastTick.get());
+        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(minutes) / TICK_INTERVAL));
     }
 
     int calculateIndexOfTick(Instant tickTime) {
@@ -117,6 +181,7 @@ public class SlidingTimeWindowMeter extends Meter {
         LOGGER.trace("current/oldest/stillNeeded/youngestNot {}/{}/{}/{}",
                 currentTick, oldestBucketTime, oldestStillNeededTime, youngestNotInWindow);
         if (oldestStillNeededTime.isAfter(youngestNotInWindow)) {
+            // there was no update() call for more than two whole TIME_WINDOW_DURATION
             newOldestIndex = oldestBucketIndex;
             LOGGER.debug("cleanup: throw away all values, old/new 'oldest': {}/{}", oldestBucketTime, currentTick);
             oldestBucketTime = currentTick;
@@ -129,19 +194,23 @@ public class SlidingTimeWindowMeter extends Meter {
             return;
         }
 
-        if (oldestBucketIndex < newOldestIndex) {
-            for (int i = oldestBucketIndex; i < newOldestIndex; i++) {
+        cleanBucketRange(oldestBucketIndex, newOldestIndex);
+        oldestBucketIndex = newOldestIndex;
+    }
+
+    private void cleanBucketRange(int fromIndex, int toIndex) {
+        if (fromIndex < toIndex) {
+            for (int i = fromIndex; i < toIndex; i++) {
                 buckets.get(i).reset();
             }
         } else {
-            for (int i = oldestBucketIndex; i < NUMBER_OF_BUCKETS; i++) {
+            for (int i = fromIndex; i < NUMBER_OF_BUCKETS; i++) {
                 buckets.get(i).reset();
             }
-            for (int i = 0; i < newOldestIndex; i++) {
+            for (int i = 0; i < toIndex; i++) {
                 buckets.get(i).reset();
             }
         }
-        oldestBucketIndex = newOldestIndex;
     }
 
     private long sumBuckets(Instant toTime, int numberOfBuckets) {
@@ -180,26 +249,5 @@ public class SlidingTimeWindowMeter extends Meter {
             final double elapsed = clock.getTick() - startTime;
             return getCount() / elapsed * TimeUnit.SECONDS.toNanos(1);
         }
-    }
-
-    @Override
-    public double getFifteenMinuteRate() {
-        updateLastTickIfNecessary();
-        Instant now = Instant.ofEpochSecond(0L, lastTick.get());
-        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(15) / TICK_INTERVAL));
-    }
-
-    @Override
-    public double getFiveMinuteRate() {
-        updateLastTickIfNecessary();
-        Instant now = Instant.ofEpochSecond(0L, lastTick.get());
-        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(5) / TICK_INTERVAL));
-    }
-
-    @Override
-    public double getOneMinuteRate() {
-        updateLastTickIfNecessary();
-        Instant now = Instant.ofEpochSecond(0L, lastTick.get());
-        return sumBuckets(now, (int) (TimeUnit.MINUTES.toNanos(1) / TICK_INTERVAL));
     }
 }
