@@ -1,6 +1,6 @@
-package ch.schlau.pesche.snppts.metrics;
+package ch.schlau.pesche.snppts.metrics.dropwizard;
 
-import static ch.schlau.pesche.snppts.metrics.SlidingTimeWindowMeter.NUMBER_OF_BUCKETS;
+import static ch.schlau.pesche.snppts.metrics.dropwizard.SlidingTimeWindowMeter.NUMBER_OF_BUCKETS;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;

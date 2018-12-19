@@ -1,4 +1,4 @@
-package ch.schlau.pesche.snppts.metrics;
+package ch.schlau.pesche.snppts.metrics.dropwizard;
 
 import java.time.Duration;
 import java.time.Instant;
